@@ -1,19 +1,37 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  Body,
+  Delete,
+} from '@nestjs/common';
 
 @Controller('category')
 export class CategoryController {
   @Post()
-  createCategory(): string {
-    return 'All done';
+  create(@Body() payload: any) {
+    return { message: 'Category has been created', meta: payload };
+  }
+
+  @Put(':id')
+  update(@Param('id') id: number, @Body() payload: any) {
+    return { message: 'Category has been updated', meta: payload }
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: number) {
+    return { message: 'Category has been deleted', meta: `Categor ID ${id}` }
   }
 
   @Get()
-  getAllCategories() {
-    return `all`;
+  getAll() {
+    return { message: 'Ok' };
   }
 
-  @Get(':categoryId')
-  getCategory(@Param('categoryId') categoryId: string) {
-    return `Category ${categoryId}`;
+  @Get(':id')
+  getOne(@Param('id') id: string) {
+    return `Category ${id}`;
   }
 }
